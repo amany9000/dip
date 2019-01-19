@@ -1,0 +1,29 @@
+ .login-form {
+  max-width: 200px;
+}
+ .login-form-forgot {
+  float: left;
+}
+ .login-form-button {
+  width: 100%;
+}
+
+.main{
+	
+	background-color:white;
+	width:30%;
+	margin-left:500px;
+	margin-top:-100px;
+	height:450px;
+	padding-top:40px;
+	line-height: 2;
+	transition: transform .2s;
+	box-shadow: 5px 5px grey;
+}
+
+.main:hover{
+	transform:scale(1.1);
+}
+
+
+
