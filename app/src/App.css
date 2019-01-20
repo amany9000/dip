@@ -63,3 +63,13 @@
   color: #418CFF !important;
   margin-top: -1rem !important;
 }
+
+.extra-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row;
+}
+
+.country-list {
+  min-width: 100% !important;
+}

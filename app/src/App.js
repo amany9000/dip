@@ -50,9 +50,6 @@ class App extends Component {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
       },
-      dense: {
-        marginTop: 16,
-      },
       menu: {
         width: 200,
       },
@@ -96,32 +93,11 @@ class App extends Component {
                   Decentralized Intellectual Property
                 </Typography>
                 <Tabs />
-                <div>
+                <div className="extra-tags">
+                  <Country />
+                  <span>{"   "}</span>
                   <TextField
-                    id="outlined-select-currency-native"
-                    select
-                    label="Native select"
-                    className={styles.textField}
-                    value={this.currencies}
-                    onChange={this.handleChange('currency')}
-                    SelectProps={{
-                      native: true,
-                      MenuProps: {
-                        className: styles.menu,
-                      },
-                    }}
-                    helperText="Country"
-                    margin="normal"
-                    variant="outlined"
-                  >
-                    {this.currencies.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                </TextField>
-                  <span style={{"marginRight": "8px", "marginLeft": "8px"}}></span>
-                  <TextField
+                    style={{"marginTop": "0px"}}
                     id="standard-password-input"
                     label="Tags"
                     className={styles.textField}
