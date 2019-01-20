@@ -6,6 +6,10 @@ import Tabs from './components/tabs';
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import 'antd/dist/antd.css';
+import 'antd/lib/date-picker/style/css';
+import Login from './login.js';
+import'./App.css';
 class App extends Component {
   render() {
     return (
@@ -22,6 +26,10 @@ class App extends Component {
         <div className="loader">
           <CircularProgress />
         </div>
+      <div >
+        <h2><div align="center" className="main1"><b>BE ORIGINAL!</b></div></h2>
+        <Login/>
+      </div>
       </div>
     );
   }
