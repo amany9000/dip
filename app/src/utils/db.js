@@ -5,7 +5,6 @@ const Repo = require('ipfs-repo')
 const repo = new Repo('/tmp/ipfs-repo')
 const fs  = require("fs")
 
-
 const node = new IPFS({ repo: repo })
  
 const conn = new driver.Connection('https://test.bigchaindb.com/api/v1/')
@@ -13,7 +12,7 @@ const conn = new driver.Connection('https://test.bigchaindb.com/api/v1/')
 //const alice = new driver.Ed25519Keypair()
 //console.log(alice)
  
-let broadCast = function (type, path, name, category, owner, public, private,callback){
+let broadCast = function (type, path, name, category, owner, publicKey, privateKey ,callback){
 	
 	node.on('ready', () => {
   	// Your node is now ready to use \o/
@@ -41,9 +40,9 @@ let broadCast = function (type, path, name, category, owner, public, private,cal
 				asset,
 			    null,
 			    [ driver.Transaction.makeOutput(
-			        driver.Transaction.makeEd25519Condition(public))],
-			    public)
-			const txSigned = driver.Transaction.signTransaction(tx, private)
+			        driver.Transaction.makeEd25519Condition(publicKey))],
+							publicKey)
+			const txSigned = driver.Transaction.signTransaction(tx, privateKey)
 			conn.postTransactionCommit(txSigned).then(() => {callback(txSigned.id)})
 	
   			}
@@ -57,12 +56,10 @@ let broadCast = function (type, path, name, category, owner, public, private,cal
  })
 }
 
-
-
-let query = function async (public,callback) {
+let query = function async (publicKey,callback) {
 	node.on('ready', () => {
 		let reply = [];
-		conn.listOutputs(public, false).then((unspentOutputs) => {
+		conn.listOutputs(publicKey, false).then((unspentOutputs) => {
 			for(let i in unspentOutputs){
 				conn.getTransaction(unspentOutputs[i].transaction_id).then((result) => {
 					if(result){
@@ -90,10 +87,9 @@ let query = function async (public,callback) {
 	})
 }
 
-
-query("CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", (reply, image) => {
-	console.log("rep",reply, image)
-})
+// query("CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", (reply, image) => {
+// 	console.log("rep",reply, image)
+// })
 
 /*
 
@@ -102,7 +98,7 @@ broadCast("IP",../../public/favicon.ico","Catalyst Business Process", "Non-Ficti
 })
 */
 
-addMapping = function async(){
+const addMapping = function async(){
 	node.on('ready', () => {
   // Your node is now ready to use \o/
   	/*
@@ -130,7 +126,7 @@ addMapping = function async(){
 	})
 }
 
-getMapping = function async(){
+const getMapping = function async(){
 	node.on('ready', () => {
   // Your node is now ready to use \o/
   	/*
@@ -158,5 +154,4 @@ getMapping = function async(){
 	})
 }
 
-
-module.exports = {query, broadCast};
+module.exports = {query, broadCast, addMapping, getMapping};
