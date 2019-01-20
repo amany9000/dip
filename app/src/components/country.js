@@ -53,10 +53,6 @@ const suggestions = [
 }));
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    height: 250,
-  },
   input: {
     display: 'flex',
     padding: 0,
@@ -233,7 +229,7 @@ class IntegrationReactSelect extends React.Component {
     };
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={{"minWidth": "180px", "marginTop": "11px"}}>
         <NoSsr>
           <Select
             classes={classes}
@@ -242,25 +238,8 @@ class IntegrationReactSelect extends React.Component {
             components={components}
             value={this.state.single}
             onChange={this.handleChange('single')}
-            placeholder="Search a country (start with a)"
+            placeholder="Search a country"
             isClearable
-          />
-          <div className={classes.divider} />
-          <Select
-            classes={classes}
-            styles={selectStyles}
-            textFieldProps={{
-              label: 'Label',
-              InputLabelProps: {
-                shrink: true,
-              },
-            }}
-            options={suggestions}
-            components={components}
-            value={this.state.multi}
-            onChange={this.handleChange('multi')}
-            placeholder="Select multiple countries"
-            isMulti
           />
         </NoSsr>
       </div>
