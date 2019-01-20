@@ -13,6 +13,7 @@ import 'antd/lib/date-picker/style/css';
 import Login from './components/login';
 import './App.css';
 import Country from './components/country';
+import Broadcast from './components/broadcast';
 class App extends Component {
 
   state = {
@@ -123,6 +124,17 @@ class App extends Component {
               </div>
             </div>
           } />
+          <Route path='/broadcast' render={() =>
+            <div className="App">
+              <div className="wrapper">
+                <Typography variant="h3" gutterBottom className="header">
+                  Decentralized Intellectual Property
+                </Typography>
+                <Broadcast />
+              </div>
+            </div>
+          } />
+          
 
           {/* <Route exact path="/question/:id"
               render={() => (
