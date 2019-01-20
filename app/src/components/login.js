@@ -15,69 +15,79 @@ import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/PlayArrow';
+import { query } from '../utils/db'
 
 
 const styles = theme => ({
-    root: {
-      display: 'flex',
-      alignItems: 'center',
-      marginTop: '20px',
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '20px',
+  },
+  wrapper: {
+    margin: theme.spacing.unit,
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
     },
-    wrapper: {
-      margin: theme.spacing.unit,
-      position: 'relative',
-    },
-    buttonSuccess: {
-      backgroundColor: green[500],
-      '&:hover': {
-        backgroundColor: green[700],
-      },
-    },
-    fabProgress: {
-      color: green[500],
-      position: 'absolute',
-      top: -6,
-      left: -6,
-      zIndex: 1,
-    },
-    buttonProgress: {
-      color: green[500],
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      marginTop: -12,
-      marginLeft: -12,
-    },
-  });
+  },
+  fabProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: -6,
+    left: -6,
+    zIndex: 1,
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+});
 
 class OutlinedTextFields extends React.Component {
-    state = {
-        loading: false,
-        success: false,
-      };
-    
-      componentWillUnmount() {
-        clearTimeout(this.timer);
-      }
-    
-      handleButtonClick = () => {
-        if (!this.state.loading) {
-          this.setState(
-            {
-              success: false,
-              loading: true,
-            },
-            () => {
-              this.timer = setTimeout(() => {
-                this.setState({
-                  loading: false,
-                  success: true,
-                });
-              }, 2000);
-            },
-          );
-        }
-    }    
+  state = {
+    loading: false,
+    success: false,
+    data: ''
+  };
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  handleButtonClick = () => {
+    if (!this.state.loading) {
+      this.setState(
+        {
+          success: false,
+          loading: true,
+        },
+      )
+      
+       query(this.state.data, (results, image) => {
+          console.log("inside")
+          if (results) {
+            console.log('hogaya')
+            this.props.setUser(this.state.data)
+            this.setState({
+              loading: false,
+              success: true,
+              data: ''
+            })
+          }else{
+            console.log('nhi hua')
+          }
+        })
+
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -88,10 +98,10 @@ class OutlinedTextFields extends React.Component {
     return (
       <Paper className="paper-card">
         <Typography variant="h3" gutterBottom className="header-email">
-            Log-In
+          Log-In
         </Typography>
         <form className="email-form" noValidate autoComplete="off">
-            <TextField
+          <TextField
             id="outlined-email-input"
             label="Id"
             className="email-text"
@@ -99,16 +109,18 @@ class OutlinedTextFields extends React.Component {
             name="email"
             margin="normal"
             variant="outlined"
-            />
+            value={this.state.data}
+            onChange={(e) => this.setState({ data: e.target.value })}
+          />
         </form>
         <div className={classes.root} >
-            <div className={classes.wrapper}>
-                <Fab color="primary" className={buttonClassname} onClick={this.handleButtonClick}>
-                    {success ? <CheckIcon /> : <SaveIcon />}
-                </Fab>
-                {loading && <CircularProgress size={68} className={classes.fabProgress} />}
-            </div>
-        {/* <div className={classes.wrapper}>
+          <div className={classes.wrapper}>
+            <Fab color="primary" className={buttonClassname} onClick={this.handleButtonClick}>
+              {success ? <CheckIcon /> : <SaveIcon />}
+            </Fab>
+            {loading && <CircularProgress size={68} className={classes.fabProgress} />}
+          </div>
+          {/* <div className={classes.wrapper}>
           <Button
             variant="contained"
             color="primary"
@@ -120,7 +132,7 @@ class OutlinedTextFields extends React.Component {
           </Button>
           {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
         </div> */}
-      </div>
+        </div>
       </Paper>
     );
   }
