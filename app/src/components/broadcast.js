@@ -71,20 +71,20 @@ class OutlinedTextFields extends React.Component {
         },
       )
       
-      //  query(this.state.data, (results, image) => {
-      //     console.log("inside")
-      //     if (results) {
-      //       console.log('hogaya')
-      //       this.props.setUser(this.state.data)
-      //       this.setState({
-      //         loading: false,
-      //         success: true,
-      //         data: ''
-      //       })
-      //     }else{
-      //       console.log('nhi hua')
-      //     }
-      //   })
+    //    query(this.state.data, (results, image) => {
+    //       console.log("inside")
+    //       if (results) {
+    //         console.log('hogaya')
+    //         this.props.setUser(this.state.data)
+    //         this.setState({
+    //           loading: false,
+    //           success: true,
+    //           data: ''
+    //         })
+    //       }else{
+    //         console.log('nhi hua')
+    //       }
+    //     })
 
     }
   }
@@ -96,14 +96,14 @@ class OutlinedTextFields extends React.Component {
       [classes.buttonSuccess]: success,
     });
     return (
-      <Paper className="paper-card">
+      <Paper className="paper-broadcast">
         <Typography variant="h3" gutterBottom className="header-email">
-          Log-In
+          Broadcast
         </Typography>
         <form className="email-form" noValidate autoComplete="off">
           <TextField
             id="outlined-email-input"
-            label="Public Key"
+            label="Name"
             className="email-text"
             type="email"
             name="email"
@@ -114,9 +114,30 @@ class OutlinedTextFields extends React.Component {
           />
           <TextField
             id="outlined-email-input"
-            label="Private Key"
+            label="Category"
             className="email-text"
             type="email"
+            name="email"
+            margin="normal"
+            variant="outlined"
+            value={this.state.data}
+            onChange={(e) => this.setState({ data: e.target.value })}
+          />
+          <TextField
+            id="outlined-email-input"
+            label="Owner"
+            className="email-text"
+            type="email"
+            name="email"
+            margin="normal"
+            variant="outlined"
+            value={this.state.data}
+            onChange={(e) => this.setState({ data: e.target.value })}
+          />
+          <TextField
+            id="outlined-email-input"
+            className="email-text"
+            type="file"
             name="email"
             margin="normal"
             variant="outlined"

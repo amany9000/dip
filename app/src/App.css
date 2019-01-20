@@ -27,6 +27,7 @@
 .header {
   line-height: 2 !important;
   color: white !important;
+  margin-bottom: 16% !important;
 }
 /* .MuiTabs-root-38 {
   background-color: #418CFF;
@@ -43,6 +44,18 @@
   position: absolute;
   height: 50vh;
   margin-top: 250px;
+  line-height: 1.5rem;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.paper-broadcast {
+  position: absolute;
+  height: 70vh;
+  margin-top: 300px;
   line-height: 1.5rem;
   width: 30%;
   display: flex;
