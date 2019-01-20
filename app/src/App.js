@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
+import 'antd/dist/antd.css';
+import 'antd/lib/date-picker/style/css';
+import Login from './login.js';
+import'./App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div >
+        <h2><div align="center" className="main1"><b>BE ORIGINAL!</b></div></h2>
+        <Login/>
       </div>
     );
   }
