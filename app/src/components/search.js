@@ -30,7 +30,9 @@ function CustomizedInputBase(props) {
 
   return (
     <div className={classes.root}>
-      <IconButton className={classes.iconButton} aria-label="Menu">
+      <IconButton className={classes.iconButton} aria-label="Menu" onClick={() => {
+        console.log('query')
+      }} >
         <SearchIcon style={{ fontSize: 30 }}/>
       </IconButton>
       <InputBase className={classes.input} placeholder={props.text} />

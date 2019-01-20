@@ -15,6 +15,14 @@ import './App.css';
 import Country from './components/country';
 class App extends Component {
 
+  state = {
+    user: null
+  }
+
+  setUser = (user) => {
+    this.setState({ user })
+  }
+
   currencies = [
     {
       value: 'USD',
@@ -82,7 +90,7 @@ class App extends Component {
                 <Typography variant="h3" gutterBottom className="header">
                   Decentralized Intellectual Property
                 </Typography>
-                <Login />
+                <Login  setUser={this.setUser} />
               </div>
             </div>
           } />
@@ -115,6 +123,22 @@ class App extends Component {
               </div>
             </div>
           } />
+
+          {/* <Route exact path="/question/:id"
+              render={() => (
+                this.props.authedUser
+                  ? <Question />
+                  : <Redirect to="/signin" />
+              )}
+            />
+            <Route exact path="/newquestion"
+              render={() => (
+                this.props.authedUser
+                  ? <NewQuestion />
+                  : <Redirect to="/signin" />
+              )}
+            /> */}
+
         </div>
       </Router>
     );
