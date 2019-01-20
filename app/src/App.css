@@ -1,5 +1,38 @@
-.main1{
+.App {
+  text-align: center;
+  height: 70vh;
+  width: 100vw;
+  background-color: #418CFF;
+}
 
+.wrapper {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mid-icon {
+  margin-top: -37px !important;
+  border-radius: 50% !important;
+  background-color: white !important;
+}
+
+.loader {
+  margin-top: 5%;
+}
+
+.header {
+  line-height: 2 !important;
+  color: white !important;
+}
+/* .MuiTabs-root-38 {
+  background-color: #418CFF;
+} */
+
+.main1{
 	height:200px;
 	background-color: #418CFF;
 	color:white;
