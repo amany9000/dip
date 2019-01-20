@@ -38,3 +38,28 @@
 	color:white;
 	padding-top:50px;
 }
+
+.paper-card {
+  position: absolute;
+  height: 50vh;
+  margin-top: 250px;
+  line-height: 1.5rem;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.email-text {
+  width: 100%;
+}
+
+.email-form {
+  width: 80%;
+}
+
+.header-email {
+  color: #418CFF !important;
+  margin-top: -1rem !important;
+}

@@ -42,7 +42,7 @@ class ScrollableTabsButtonAuto extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        {/* <AppBar position="static" color="default">
           <Tabs
             value={value}
             onChange={this.handleChange}
@@ -59,7 +59,7 @@ class ScrollableTabsButtonAuto extends React.Component {
             <Tab label="Item Six" />
             <Tab label="Item Seven" />
           </Tabs>
-        </AppBar>
+        </AppBar> */}
         {value === 0 && <TabContainer><Search text="Images" /></TabContainer>}
         {value === 1 && <TabContainer><Search text="Images" /></TabContainer>}
         {value === 2 && <TabContainer><Search text="Images" /></TabContainer>}
