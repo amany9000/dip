@@ -7,6 +7,8 @@
     "@material-ui/icons": "^3.0.2",
     "antd": "^3.12.3",
     "bigchaindb-driver": "^4.1.0",
+    "base-x": "3.0.4",
+    "bip39": "^2.5.0",
     "ipfs": "^0.34.0",
     "ipfs-repo": "^0.26.1",
     "react": "^16.7.0",

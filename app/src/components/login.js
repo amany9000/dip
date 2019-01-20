@@ -16,6 +16,7 @@ import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/PlayArrow';
 // import { query } from '../utils/db'
+import { withRouter } from 'react-router-dom'
 
 
 const styles = theme => ({
@@ -55,7 +56,8 @@ class OutlinedTextFields extends React.Component {
   state = {
     loading: false,
     success: false,
-    data: ''
+    publicK: '',
+    privateK: '',
   };
 
   componentWillUnmount() {
@@ -63,6 +65,36 @@ class OutlinedTextFields extends React.Component {
   }
 
   handleButtonClick = () => {
+
+
+    if (!this.state.loading) {
+      this.setState(
+        {
+          success: false,
+          loading: true,
+        },
+        () => {
+          this.timer = setTimeout(() => {
+            this.props.setUser({
+              publicK: this.state.publicK,
+              privateK: this.state.privateK,
+            })
+            
+
+            this.setState({
+              loading: false,
+              success: true,
+              privateK: '',
+              publicK: ''
+            })
+            this.props.history.push('/broadcast')
+          }, 1500);
+        },
+      );
+    }
+
+
+
     if (!this.state.loading) {
       this.setState(
         {
@@ -70,7 +102,22 @@ class OutlinedTextFields extends React.Component {
           loading: true,
         },
       )
-      
+
+      this.props.setUser({
+        publicK: this.state.publicK,
+        privateK: this.state.privateK,
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            loading: false,
+            success: true,
+            privateK: '',
+            publicK: ''
+          })
+          this.props.history.push('/broadcast')
+        }, 1000)
+      })
+
       //  query(this.state.data, (results, image) => {
       //     console.log("inside")
       //     if (results) {
@@ -85,7 +132,6 @@ class OutlinedTextFields extends React.Component {
       //       console.log('nhi hua')
       //     }
       //   })
-
     }
   }
 
@@ -109,8 +155,8 @@ class OutlinedTextFields extends React.Component {
             name="email"
             margin="normal"
             variant="outlined"
-            value={this.state.data}
-            onChange={(e) => this.setState({ data: e.target.value })}
+            value={this.state.publicK}
+            onChange={(e) => this.setState({ publicK: e.target.value })}
           />
           <TextField
             id="outlined-email-input"
@@ -120,8 +166,8 @@ class OutlinedTextFields extends React.Component {
             name="email"
             margin="normal"
             variant="outlined"
-            value={this.state.data}
-            onChange={(e) => this.setState({ data: e.target.value })}
+            value={this.state.privateK}
+            onChange={(e) => this.setState({ privateK: e.target.value })}
           />
         </form>
         <div className={classes.root} >
@@ -153,4 +199,4 @@ OutlinedTextFields.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(OutlinedTextFields);
+export default withRouter(withStyles(styles)(OutlinedTextFields));

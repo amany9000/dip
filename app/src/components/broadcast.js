@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/PlayArrow';
-// import { query } from '../utils/db'
+import { broadCast } from '../utils/db'
 
 
 const styles = theme => ({
@@ -55,7 +55,10 @@ class OutlinedTextFields extends React.Component {
   state = {
     loading: false,
     success: false,
-    data: ''
+    name: '',
+    category: '',
+    owner: '',
+    file: ''
   };
 
   componentWillUnmount() {
@@ -70,21 +73,23 @@ class OutlinedTextFields extends React.Component {
           loading: true,
         },
       )
-      
-    //    query(this.state.data, (results, image) => {
-    //       console.log("inside")
-    //       if (results) {
-    //         console.log('hogaya')
-    //         this.props.setUser(this.state.data)
-    //         this.setState({
-    //           loading: false,
-    //           success: true,
-    //           data: ''
-    //         })
-    //       }else{
-    //         console.log('nhi hua')
-    //       }
-    //     })
+      broadCast(this.state.file, this.state.name, this.state.category, this.state.owner, this.props.publicK, this.props.privateK,
+        (results, image) => {
+        console.log("inside")
+        if (results) {
+          console.log('hogaya')
+          this.props.setUser(this.state.data)
+          this.setState({
+            loading: false,
+            success: true,
+            name: '',
+            category:'',
+            owner: ''
+          })
+        }else{
+          console.log('nhi hua')
+        }
+      })
 
     }
   }
@@ -109,8 +114,8 @@ class OutlinedTextFields extends React.Component {
             name="email"
             margin="normal"
             variant="outlined"
-            value={this.state.data}
-            onChange={(e) => this.setState({ data: e.target.value })}
+            value={this.state.name}
+            onChange={(e) => this.setState({ name: e.target.value })}
           />
           <TextField
             id="outlined-email-input"
@@ -120,8 +125,8 @@ class OutlinedTextFields extends React.Component {
             name="email"
             margin="normal"
             variant="outlined"
-            value={this.state.data}
-            onChange={(e) => this.setState({ data: e.target.value })}
+            value={this.state.category}
+            onChange={(e) => this.setState({ category: e.target.value })}
           />
           <TextField
             id="outlined-email-input"
@@ -131,8 +136,8 @@ class OutlinedTextFields extends React.Component {
             name="email"
             margin="normal"
             variant="outlined"
-            value={this.state.data}
-            onChange={(e) => this.setState({ data: e.target.value })}
+            value={this.state.owner}
+            onChange={(e) => this.setState({ owner: e.target.value })}
           />
           <TextField
             id="outlined-email-input"
@@ -141,13 +146,13 @@ class OutlinedTextFields extends React.Component {
             name="email"
             margin="normal"
             variant="outlined"
-            value={this.state.data}
-            onChange={(e) => this.setState({ data: e.target.value })}
+            value={this.state.file}
+            onChange={(e) => console.log(e.target.value)}
           />
         </form>
         <div className={classes.root} >
           <div className={classes.wrapper}>
-            <Fab color="primary" className={buttonClassname} onClick={this.handleButtonClick}>
+            <Fab color="primary" className={buttonClassname} onClick={() => this.handleButtonClick()}>
               {success ? <CheckIcon /> : <SaveIcon />}
             </Fab>
             {loading && <CircularProgress size={68} className={classes.fabProgress} />}

@@ -17,11 +17,14 @@ import Broadcast from './components/broadcast';
 class App extends Component {
 
   state = {
-    user: null
+    publicK: null,
+    privateK: null
   }
 
-  setUser = (user) => {
-    this.setState({ user })
+  setUser = ({publicK, privateK}) => {
+    console.log(publicK)
+    console.log(privateK)
+    this.setState({ publicK, privateK })
   }
 
   currencies = [
@@ -119,9 +122,9 @@ class App extends Component {
               <IconButton className="mid-icon" aria-label="Menu">
                 <AddIcon style={{ fontSize: 50 }} />
               </IconButton>
-              <div className="loader">
+              {/* <div className="loader">
                 <CircularProgress />
-              </div>
+              </div> */}
             </div>
           } />
           <Route path='/broadcast' render={() =>
@@ -130,7 +133,7 @@ class App extends Component {
                 <Typography variant="h3" gutterBottom className="header">
                   Decentralized Intellectual Property
                 </Typography>
-                <Broadcast />
+                <Broadcast privateK={this.state.privateK} publicK={this.state.publicK} />
               </div>
             </div>
           } />
