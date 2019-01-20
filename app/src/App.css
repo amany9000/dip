@@ -86,3 +86,8 @@
 .country-list {
   min-width: 100% !important;
 }
+
+.header-search {
+  line-height: 2 !important;
+  color: white !important;
+}

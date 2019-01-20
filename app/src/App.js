@@ -98,7 +98,7 @@ class App extends Component {
           <Route path='/search' render={() =>
             <div className="App">
               <div className="wrapper">
-                <Typography variant="h3" gutterBottom className="header">
+                <Typography variant="h3" gutterBottom className="header-search">
                   Decentralized Intellectual Property
                 </Typography>
                 <Tabs />
