@@ -13,7 +13,7 @@ const conn = new driver.Connection('https://test.bigchaindb.com/api/v1/')
 //const alice = new driver.Ed25519Keypair()
 //console.log(alice)
  
-let broadCast = function (path, name, category, owner, public, private,callback){
+let broadCast = function (type, path, name, category, owner, public, private,callback){
 	
 	node.on('ready', () => {
   	// Your node is now ready to use \o/
@@ -28,7 +28,9 @@ let broadCast = function (path, name, category, owner, public, private,callback)
   			console.log(result)
   			if(result && (result[0]) && (result[0].path)){
   			let asset =
-						{"name": name,
+						{
+						"type": type,	
+						"name": name,
     					"datetime": new Date().toString(),
     					"category": category,
     					"owner": owner,	
@@ -70,14 +72,11 @@ let query = function async (public,callback) {
 								node.get(result.asset.data.ipfsPath, function (err, files) {
 	  							files.forEach((file) => {
 	  							  	if(file.content){
-	  							  	 	 fs.writeFile(`${file.name}`, file.content, 'binary', function(err) {
-	  							         if(err){throw err;}
-	  							        })
-	  							      }
+		  								if(unspentOutputs[i] == unspentOutputs[unspentOutputs.length - 1])
+			  								console.log("re",file.content)
+	  										callback(reply,file.content);
+							  			}
 	  								})
-	  								if(unspentOutputs[i] == unspentOutputs[unspentOutputs.length - 1])
-		  								//console.log("re",reply)
-	  									callback(reply);
 	  							})
 							}
 						}
@@ -91,14 +90,73 @@ let query = function async (public,callback) {
 	})
 }
 
-/*
-query("CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", (reply) => {
-	console.log("rep",reply)
+
+query("CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", (reply, image) => {
+	console.log("rep",reply, image)
 })
 
-*/
+/*
 
-broadCast("../../public/favicon.ico","Catalyst Business Process", "Non-Fiction", "Dipu RBwala", "CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", "B7Vsp2KwYDUHJ9BfnQdvgYywLWpig35RM3HTpwTfGGR", (reply) => {
+broadCast("IP",../../public/favicon.ico","Catalyst Business Process", "Non-Fiction", "Dipu RBwala", "CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", "B7Vsp2KwYDUHJ9BfnQdvgYywLWpig35RM3HTpwTfGGR", (reply) => {
 	console.log("b", reply)
 })
+*/
 
+addMapping = function async(){
+	node.on('ready', () => {
+  // Your node is now ready to use \o/
+  	/*
+	node.addFromFs('./fs', { recursive: true}, (err, result) => {
+  		if (err) { throw err }
+  			console.log(result)
+	})
+ 	*/
+  	
+	node.get("QmPetTJShVSbgvHygewbEE1gtNDDLFMqy9pyuQ1tPj7QBK", function (err, files) {
+  		console.log(files)
+  		files.forEach((file) => {
+    	console.log(file.path)
+    	if(file.content){
+    	 	 fs.writeFile(`${file.name}.jpg`, file.content, 'binary', function(err) {
+           if(err){throw err;}
+        	})
+          }
+  		})
+  	})
+  	// stopping a node
+  		node.stop(() => {
+   		// node is now 'offline'
+  		})
+	})
+}
+
+getMapping = function async(){
+	node.on('ready', () => {
+  // Your node is now ready to use \o/
+  	/*
+	node.addFromFs('./fs', { recursive: true}, (err, result) => {
+  		if (err) { throw err }
+  			console.log(result)
+	})
+ 	*/
+  	
+	node.get("QmPetTJShVSbgvHygewbEE1gtNDDLFMqy9pyuQ1tPj7QBK", function (err, files) {
+  		console.log(files)
+  		files.forEach((file) => {
+    	console.log(file.path)
+    	if(file.content){
+    	 	 fs.writeFile(`${file.name}.jpg`, file.content, 'binary', function(err) {
+           if(err){throw err;}
+        	})
+          }
+  		})
+  	})
+  	// stopping a node
+  		node.stop(() => {
+   		// node is now 'offline'
+  		})
+	})
+}
+
+
+module.exports = {query, broadCast};
