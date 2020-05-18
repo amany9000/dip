@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Tabs from './components/tabs';
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import 'antd/dist/antd.css';
@@ -139,7 +139,7 @@ class App extends Component {
           } />
           
 
-          {/* <Route exact path="/question/:id"
+          {/* <Route exact path="/  /:id"
               render={() => (
                 this.props.authedUser
                   ? <Question />
@@ -153,8 +153,13 @@ class App extends Component {
                   : <Redirect to="/signin" />
               )}
             /> */}
-
+        <Route exact path="/"
+              render={() => (
+                  <Redirect to="/signin" />
+              )}
+        />
         </div>
+
       </Router>
     );
   }

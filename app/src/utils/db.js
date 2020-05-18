@@ -1,32 +1,29 @@
 
 const driver = require('bigchaindb-driver')
-const IPFS = require('ipfs')
-const Repo = require('ipfs-repo')
-const repo = new Repo('/tmp/ipfs-repo')
 const fs = require("fs")
-
-
-const node = new IPFS({ repo: repo })
 
 const conn = new driver.Connection('https://test.bigchaindb.com/api/v1/')
 
 //const alice = new driver.Ed25519Keypair()
 //console.log(alice)
 
-let broadCast = function (path, name, category, owner, publicKey, privateKey, callback) {
+export const broadCast = async (path, name, category, owner, publicKey, privateKey, callback) => {
+    console.log("path", path)
+    let file = fs.readFileSync(path); // Read Provided File      
+    //let buf = new Buffer(file);
 
-    node.on('ready', () => {
-        // Your node is now ready to use \o/
+    //console.log("b", buf)
 
-        let file = fs.readFileSync(path); // Read Provided File      
-        let buf = new Buffer(file);
+    var formData  = new FormData();
 
-        console.log("b", buf)
-
-        node.add(buf, { recursive: true }, (err, result) => {
-            if (err) { callback(err) }
-            console.log(result)
-            if (result && (result[0]) && (result[0].path)) {
+    formData.append('file', file);
+    
+    return await fetch("https://ipfs.infura.io:5001/api/v0/add", {
+        method: 'POST',
+        body: formData
+    }).then(function (response) {
+        response.json().then((rep) => {
+            if (rep && (rep.hash)) {
                 let asset =
                 {
                     "type": "IP",
@@ -34,7 +31,7 @@ let broadCast = function (path, name, category, owner, publicKey, privateKey, ca
                     "datetime": new Date().toString(),
                     "category": category,
                     "owner": owner,
-                    "ipfsPath": result[0].hash
+                    "ipfsPath": rep.hash
                 }
 
                 const tx = driver.Transaction.makeCreateTransaction(
@@ -45,16 +42,9 @@ let broadCast = function (path, name, category, owner, publicKey, privateKey, ca
                         publicKey)
                 const txSigned = driver.Transaction.signTransaction(tx, privateKey)
                 conn.postTransactionCommit(txSigned).then(() => { callback(txSigned.id) })
-
             }
         })
-
-
-        // stopping a node
-        node.stop(() => {
-            // node is now 'offline'
-        })
-    })
+    });
 }
 
 // let query = function async (publicKey,callback) {
@@ -93,83 +83,74 @@ let broadCast = function (path, name, category, owner, publicKey, privateKey, ca
 //     })
 // }
 
-
-
-let query = function async (publicKey,callback) {
-    node.on('ready', () => {
-        let reply = [];
-        conn.listOutputs(publicKey, false).then((unspentOutputs) => {
-            //console.log("t",unspentOutputs.length)
-                let i = 0;
-                unspentOutputs.forEach((uO) => {
-                conn.getTransaction(uO.transaction_id).then((result) => {
-                    if(result){
-                          //console.log("res",i,unspentOutputs.length -1, result.asset.data.type)
-                          if(result && (result.asset) && (result.asset.data) && (result.asset.data.type) && (result.asset.data.type === "Treaty"))
-                                  reply.push(result.asset.data)
-                          if(i == (unspentOutputs.length-1)){
-                              console.log("re",uO.transaction_id)
-                              callback(reply);
-                             }
-                        }
-                i++;                    
-                })                    
-            });
-
-            })
-        })
-    
-      node.stop(() => {
-        // node is now 'offline'
-      })    
+export let query = function async (publicKey,callback) {
+//    node.on('ready', () => {
+//        let reply = [];
+//        conn.listOutputs(publicKey, false).then((unspentOutputs) => {
+//            //console.log("t",unspentOutputs.length)
+//                let i = 0;
+//                unspentOutputs.forEach((uO) => {
+//                conn.getTransaction(uO.transaction_id).then((result) => {
+//                    if(result){
+//                          //console.log("res",i,unspentOutputs.length -1, result.asset.data.type)
+//                          if(result && (result.asset) && (result.asset.data) && (result.asset.data.type) && (result.asset.data.type === "Treaty"))
+//                                  reply.push(result.asset.data)
+//                          if(i == (unspentOutputs.length-1)){
+//                              console.log("re",uO.transaction_id)
+//                              callback(reply);
+//                             }
+//                        }
+//                i++;                    
+//                })                    
+//            });
+//
+//            })
+//        })
+//    
+//      node.stop(() => {
+//        // node is now 'offline'
+//      })    
 }
 
+//export let addMapping = function async(country, publicMapp, publicKey, privateKey, callback) {
+//    let asset =
+//    {
+//        "type": "Treaty",
+//        "country": country,
+//        "datetime": new Date().toString(),
+//    "publicKey": publicMapp
+//    }
+//
+//    const tx = driver.Transaction.makeCreateTransaction(
+//        asset,
+//        null,
+//        [driver.Transaction.makeOutput(
+//            driver.Transaction.makeEd25519Condition(publicKey))],
+//        publicKey)
+//    const txSigned = driver.Transaction.signTransaction(tx, privateKey)
+//    conn.postTransactionCommit(txSigned).then(() => { callback(txSigned.id) })
+//
+//}
 
-
-
-
-
-
-
-let addMapping = function async(country, publicMapp, publicKey, privateKey, callback) {
-    let asset =
-    {
-        "type": "Treaty",
-        "country": country,
-        "datetime": new Date().toString(),
-    "publicKey": publicMapp
-    }
-
-    const tx = driver.Transaction.makeCreateTransaction(
-        asset,
-        null,
-        [driver.Transaction.makeOutput(
-            driver.Transaction.makeEd25519Condition(publicKey))],
-        publicKey)
-    const txSigned = driver.Transaction.signTransaction(tx, privateKey)
-    conn.postTransactionCommit(txSigned).then(() => { callback(txSigned.id) })
-
-}
-
-let getMapping = function async(publicKey, callback) {
-
-    conn.listOutputs(publicKey, false).then((unspentOutputs) => {
-        let reply = [];
-        for (let i = 0; i < unspentOutputs.length; i++) {
-            conn.getTransaction(unspentOutputs[i].transaction_id).then((result) => {
-                if (result !== undefined) {
-                    console.log("es", result.asset.data.type)
-                    if (result && (result.asset) && (result.asset.data) && (result.asset.data.type) && (result.asset.data.type === "Treaty"))
-                        reply.push(result.asset.data)
-                    if (i === (unspentOutputs.length - 1)) {
-                        //console.log("re")
-                        callback(reply);
-                    }
-                }
-            })
-        }
-    })
-}
+//export let getMapping = function async(publicKey, callback) {
+//
+//    conn.listOutputs(publicKey, false).then((unspentOutputs) => {
+//        let reply = [];
+//        for (let i = 0; i < unspentOutputs.length; i++) {
+//            conn.getTransaction(unspentOutputs[i].transaction_id).then((result) => {
+//                if (result !== undefined) {
+//                    console.log("es", result.asset.data.type)
+//                    if (result && (result.asset) && (result.asset.data) && (result.asset.data.type) && (result.asset.data.type === "Treaty"))
+//                        reply.push(result.asset.data)
+//                    if (i === (unspentOutputs.length - 1)) {
+//                        //console.log("re")
+//                        callback(reply);
+//                    }
+//                }
+//            })
+//        }
+//    })
+//}
 
 
 // query("CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", (reply, image) => {
@@ -192,4 +173,4 @@ getMapping("CzWKAz4TJnXm6gVffMduP12sAPM1PPfTx6jaF2MWjj8T", (reply) => {
     console.log("rep",reply)
 })
 */
-module.exports = { query, broadCast, addMapping, getMapping };
+//module.exports = { query, broadCast, addMapping, getMapping };

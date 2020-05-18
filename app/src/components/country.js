@@ -234,6 +234,7 @@ class IntegrationReactSelect extends React.Component {
           <Select
             classes={classes}
             styles={selectStyles}
+            text="secondary"
             options={suggestions}
             components={components}
             value={this.state.single}

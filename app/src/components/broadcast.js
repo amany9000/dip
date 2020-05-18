@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -139,7 +140,7 @@ class OutlinedTextFields extends React.Component {
             value={this.state.owner}
             onChange={(e) => this.setState({ owner: e.target.value })}
           />
-          <TextField
+          <Input
             id="outlined-email-input"
             className="email-text"
             type="file"
