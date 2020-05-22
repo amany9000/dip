@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Tabs from './components/tabs';
 import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import 'antd/dist/antd.css';
@@ -70,6 +70,7 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <Switch>
           {/* <AppBar position="static" color="default">
           <Tabs
             value={value}
@@ -100,7 +101,7 @@ class App extends Component {
           } />
           <Route path='/search' render={() =>
             <div className="App">
-              <div className="wrapper">
+              <div className="wrapper" style={{"background" : "#3C78BF"}}>
                 <Typography variant="h3" gutterBottom className="header-search">
                   Decentralized Intellectual Property
                 </Typography>
@@ -129,7 +130,7 @@ class App extends Component {
           } />
           <Route path='/broadcast' render={() =>
             <div className="App">
-              <div className="wrapper">
+              <div className="wrapper" style={{"background" : "#3C93BF"}}>
                 <Typography variant="h3" gutterBottom className="header">
                   Decentralized Intellectual Property
                 </Typography>
@@ -158,8 +159,14 @@ class App extends Component {
                   <Redirect to="/signin" />
               )}
         />
-        </div>
 
+        <Route path="*"
+              render={() => (
+                <div><h2>Page not found. Go to <a href="/">Sign In Page</a>.</h2></div>
+              )}
+        />
+        </Switch>
+        </div>
       </Router>
     );
   }

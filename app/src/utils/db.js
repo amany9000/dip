@@ -12,8 +12,6 @@ export const broadCast = async (path, name, category, owner, publicKey, privateK
     let file = fs.readFileSync(path); // Read Provided File      
     //let buf = new Buffer(file);
 
-    //console.log("b", buf)
-
     var formData  = new FormData();
 
     formData.append('file', file);

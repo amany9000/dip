@@ -102,7 +102,7 @@ class OutlinedTextFields extends React.Component {
       [classes.buttonSuccess]: success,
     });
     return (
-      <Paper className="paper-broadcast">
+      <Paper className="paper-broadcast" >
         <Typography variant="h3" gutterBottom className="header-email">
           Broadcast
         </Typography>
@@ -151,7 +151,7 @@ class OutlinedTextFields extends React.Component {
             onChange={(e) => console.log(e.target.value)}
           />
         </form>
-        <div className={classes.root} >
+        <div className={classes.root}>
           <div className={classes.wrapper}>
             <Fab color="primary" className={buttonClassname} onClick={() => this.handleButtonClick()}>
               {success ? <CheckIcon /> : <SaveIcon />}

@@ -1,9 +1,9 @@
 # DIP - the Decentralised Intellectual Property database
 
-![broadcast](./img/broadcast.png)
-
-### About
+## About
 A use case intended for [WIPO](https://www.wipo.int/portal/en/index.html). The end product is a global Intellectual Property (IP), maintained on a DLT and not owned by any single Country or Company.
+
+![broadcast](./img/broadcast.png)
 
 ![search](./img/search.png)
 
@@ -44,10 +44,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Team Members
 
--   [Aman Yadav](https://github.com/amany9000)
 -   [Dipansh Khandelwal](https://github.com/DipanshKhandelwal)
 -   [Divyesh Puri](https://github.com/DivyeshPuri)
 -   [Rohan Dhoot](https://github.com/rohan2599)
+-   and [Myself](https://github.com/amany9000)
 
 ---
 
